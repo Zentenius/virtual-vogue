@@ -1,11 +1,47 @@
+"use client"
 import { ShimmerButton } from "@/components/shimmer-button"
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
 
 import Image from "next/image"
 import Link from "next/link"
 
 export default function Page() {
+  const [showIntro, setShowIntro] = useState(true)
+  
+  // Auto-trigger the transition after 2 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false)
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const fadeVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  }
   return (
-    <div className="bg-[#f9f0f2]">
+    <AnimatePresence>
+            {showIntro ? (
+        <motion.div
+          key="intro"
+          variants={fadeVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 bg-black flex items-center justify-center"
+        >
+          <motion.h1 className="font-bold text-9xl text-gray-200">
+            The Solution...
+          </motion.h1>
+        </motion.div>
+      ) : (
+        <motion.div  key="main"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }} className="bg-[#f9f0f2]">
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <nav className="flex items-center space-x-8">
           <Link href="#" className="text-gray-600 hover:text-gray-900">
@@ -96,7 +132,10 @@ export default function Page() {
           </div>
         </div>
       </main>
-    </div>
+    </motion.div>
+      )}
+    
+    </AnimatePresence>
   )
 }
 
