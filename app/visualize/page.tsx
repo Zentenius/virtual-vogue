@@ -2,10 +2,6 @@
 
 import { useState, useEffect, useRef } from "react"
 import Webcam from "react-webcam"
-import { Canvas} from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import Spline from '@splinetool/react-spline';
 import { Carousel } from "@/components/ui/carousel";
 
